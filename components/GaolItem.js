@@ -16,10 +16,9 @@ export default function GoalItem(props) {
 
 const styles = StyleSheet.create({
   goalItem: {
-    marginHorizontal: 3,
-    marginVertical: 3,
+    marginHorizontal: 16,
+    marginVertical: 5,
     borderRadius: 6,
-    // backgroundColor: "#5e0acc",
     backgroundColor: "green",
     color: "white",
   },
