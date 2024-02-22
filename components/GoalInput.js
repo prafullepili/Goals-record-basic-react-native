@@ -4,22 +4,31 @@ import {
   Button,
   StyleSheet,
   Modal,
+  Text,
   Image,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function GoalInput(props) {
   const [enteredGaolText, setEnteredGaolText] = useState("");
+  const [isValid, setIsValid] = useState(undefined);
 
+  useEffect(() => {
+    if (enteredGaolText) setIsValid(true);
+  }, [enteredGaolText]);
   function goalInputHandler(enteredText) {
     setEnteredGaolText(enteredText);
   }
 
   function addGoalHandler() {
+    if (!enteredGaolText) {
+      setIsValid(false);
+      return;
+    }
+    setIsValid(true);
     props.onAddGoal(enteredGaolText);
     setEnteredGaolText("");
   }
-
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputContainer}>
@@ -27,8 +36,15 @@ export default function GoalInput(props) {
           style={styles.image}
           source={require("../assets/images/goal.png")}
         />
+        {!isValid && <Text style={styles.warningText}>Enter</Text>}
         <TextInput
-          style={styles.TextInput}
+          style={[
+            styles.TextInput,
+            {
+              borderWidth: 5,
+              borderColor: `${!isValid ? "red" : "green"}`,
+            },
+          ]}
           onChangeText={goalInputHandler}
           placeholder="Your course goal!"
           value={enteredGaolText}
@@ -60,7 +76,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#311b6b",
     padding: 20,
   },
-
+  warningText: {
+    color: "red",
+    alignSelf: "flex-start",
+    marginBottom: 5,
+    fontSize: 17,
+  },
   TextInput: {
     borderWidth: 1,
     borderColor: "#e4d0ff",
@@ -71,6 +92,7 @@ const styles = StyleSheet.create({
     padding: 16,
     fontSize: 22,
   },
+
   image: {
     width: 100,
     height: 100,

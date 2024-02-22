@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, FlatList, Button } from "react-native";
+import { StyleSheet, View, FlatList, Button, Text } from "react-native";
 import { useState } from "react";
 import GoalItem from "./components/GaolItem";
 import GoalInput from "./components/GoalInput";
@@ -43,6 +43,9 @@ export default function App() {
                 />
               );
             }}
+            ListEmptyComponent={
+              <Text style={styles.noGoals}>No Goals, Add New Goals</Text>
+            }
             keyExtractor={(item, index) => {
               return item.id;
             }}
@@ -70,6 +73,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     // backgroundColor: "#1e085a",
+    paddingTop: 50,
+  },
+  noGoals: {
+    color: "lightgray",
+    alignSelf: "center",
+    fontSize: 20,
+    paddingTop: 20,
   },
   goalsContainer: {
     flex: 10,
